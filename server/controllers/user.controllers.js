@@ -41,8 +41,31 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-const loginUser = asyncHandler(async () => {
-  // test
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if ([email, password].some((field) => !field || field.trim() === "")) {
+    throw new ApiError(401, "Email and Password both are Required");
+  }
+
+  try {
+    const user = prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      throw new ApiError(401, "User does not Exist");
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { user }, "User logined Successfully"));
+  } catch (error) {
+    console.log("Login failed:", error);
+    throw new ApiError(400, error.message);
+  }
 });
 
-export { registerUser };
+export { registerUser, loginUser };
