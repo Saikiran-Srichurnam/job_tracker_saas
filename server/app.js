@@ -20,7 +20,9 @@ app.use(
 
 // routes
 import healthCheckRouter from "./routes/healthCheck.routes.js";
+import userRouter from "./routes/user.routes.js";
 
-app.use("/api/v1/healthcheck", healthCheckRouter);
+app.use("/api/jobs/healthcheck", healthCheckRouter);
+app.use("/api/jobs/users", userRouter);
 
 export { app };
