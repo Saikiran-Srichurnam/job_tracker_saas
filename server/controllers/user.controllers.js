@@ -2,6 +2,62 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { prisma } from "../config/db.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
+// Generating Access Token
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    {
+      userId: user.id,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY },
+  );
+};
+
+// Generating Refresh Token
+const generateRefreshToken = (user) => {
+  return jwt.sign(
+    {
+      userId: user.id,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY },
+  );
+};
+
+// generating refresh and access token so that we can destructure tokens using this method
+const generateRefreshAndAccessToken = async (userId) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new ApiError(400, "Invalid user id");
+    }
+
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    await prisma.refreshToken.create({
+      data: {
+        hashedToken: refreshToken, // Must match the field name in schema
+        userId: user.id,
+      },
+    });
+    return { refreshToken, accessToken };
+  } catch (error) {
+    console.log("Error generating access and refresh token", error);
+    throw new ApiError(
+      401,
+      "Something went wrong while generating access and refreshToken",
+    );
+  }
+};
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
@@ -24,11 +80,14 @@ const registerUser = asyncHandler(async (req, res) => {
       throw new ApiError(400, "User Already Exist");
     }
 
+    // Password verification
+    const hashedToken = await bcrypt.hash(password, 10);
+
     const newUser = await prisma.user.create({
       data: {
         name: username,
         email: email,
-        password: password,
+        password: hashedToken,
       },
     });
 
@@ -42,26 +101,55 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   if ([email, password].some((field) => !field || field.trim() === "")) {
     throw new ApiError(401, "Email and Password both are Required");
   }
 
   try {
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
+      //findUnique doesnot support OR operator so use findFirst
       where: {
-        email: email,
+        OR: [{ email: email }, { name: username }],
       },
     });
-
     if (!user) {
       throw new ApiError(401, "User does not Exist");
     }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new ApiError(401, "Invalid Credentials");
+    }
+
+    const { refreshToken, accessToken } = await generateRefreshAndAccessToken(
+      user.id,
+    );
+
+    const loggedInUser = await prisma.user.findFirst({
+      where: { id: user.id },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+      },
+    });
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
 
     return res
       .status(200)
-      .json(new ApiResponse(200, { user }, "User logined Successfully"));
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          { loggedInUser, accessToken, refreshToken },
+          "User logined Successfully",
+        ),
+      );
   } catch (error) {
     console.log("Login failed:", error);
     throw new ApiError(400, error.message);
