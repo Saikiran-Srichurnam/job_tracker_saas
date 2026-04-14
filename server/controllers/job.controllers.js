@@ -44,4 +44,31 @@ const getAllJobs = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, { jobs }, "Jobs fetched Successfully"));
 });
 
-export { createJob, getAllJobs };
+// update job by id
+const updateJob = asyncHandler(async (req, res, next) => {
+  const { jobId } = req.params;
+  const { company, role } = req.body;
+
+  if (!jobId) {
+    throw new ApiError(401, "Invalid job id");
+  }
+
+  const job = await prisma.job.update({
+    where: {
+      id: jobId,
+      userId: req.user.id,
+    },
+    data: {
+      company: company,
+      role: role,
+    },
+  });
+
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(201, { job }, `Updated the ${jobId} data Successfully`),
+    );
+});
+
+export { createJob, getAllJobs, updateJob };
