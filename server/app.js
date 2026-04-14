@@ -21,8 +21,10 @@ app.use(
 // routes
 import healthCheckRouter from "./routes/healthCheck.routes.js";
 import userRouter from "./routes/user.routes.js";
+import jobsRouter from "./routes/job.routes.js";
 
-app.use("/api/jobs/healthcheck", healthCheckRouter);
-app.use("/api/jobs/users", userRouter);
+app.use("/api/healthcheck", healthCheckRouter);
+app.use("/api/users", userRouter);
+app.use("/api/jobs", jobsRouter);
 
 export { app };

@@ -4,16 +4,16 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const createJob = asyncHandler(async (req, res, next) => {
-  const { company, position } = req.body;
+  const { company, role } = req.body;
 
-  if ([company, position].some((field) => !field || field.trim() === "")) {
+  if ([company, role].some((field) => !field || field.trim() === "")) {
     throw new ApiError(400, "All Fields are Required");
   }
 
   const job = await prisma.job.create({
     data: {
       company: company,
-      position: position,
+      role: role,
       userId: req.user.id,
     },
   });

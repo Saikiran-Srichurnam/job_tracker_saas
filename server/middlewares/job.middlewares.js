@@ -1,8 +1,9 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import { prisma } from "../config/db.js";
 
-const VerifyJWT = asyncHandler(async (req, _, next) => {
+const verifyJWT = asyncHandler(async (req, _, next) => {
   try {
     //1 Get token from cookies or headers
     const token =
@@ -41,4 +42,4 @@ const VerifyJWT = asyncHandler(async (req, _, next) => {
   }
 });
 
-export { VerifyJWT };
+export { verifyJWT };
