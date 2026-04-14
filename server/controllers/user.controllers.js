@@ -81,13 +81,13 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // Password verification
-    const hashedToken = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
       data: {
         name: username,
         email: email,
-        password: hashedToken,
+        password: hashedPassword,
       },
     });
 
@@ -126,17 +126,15 @@ const loginUser = asyncHandler(async (req, res) => {
       user.id,
     );
 
-    const loggedInUser = await prisma.user.findFirst({
-      where: { id: user.id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-      },
-    });
+    const loggedInUser = {
+      id: user.id,
+      email: user.email,
+      name: user.username,
+    };
+
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
     };
 
     return res
@@ -144,11 +142,7 @@ const loginUser = asyncHandler(async (req, res) => {
       .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
       .json(
-        new ApiResponse(
-          200,
-          { loggedInUser, accessToken, refreshToken },
-          "User logined Successfully",
-        ),
+        new ApiResponse(200, { loggedInUser }, "User logined Successfully"),
       );
   } catch (error) {
     console.log("Login failed:", error);
@@ -156,4 +150,4 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser, loginUser };
+export { generateRefreshAndAccessToken, registerUser, loginUser };
