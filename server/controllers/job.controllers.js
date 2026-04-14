@@ -4,9 +4,9 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const createJob = asyncHandler(async (req, res, next) => {
-  const { company, position, status } = req.body;
+  const { company, position } = req.body;
 
-  if ([company, position, status].some((field) => !field || field === "")) {
+  if ([company, position].some((field) => !field || field.trim() === "")) {
     throw new ApiError(400, "All Fields are Required");
   }
 
@@ -14,14 +14,34 @@ const createJob = asyncHandler(async (req, res, next) => {
     data: {
       company: company,
       position: position,
-      status: status,
       userId: req.user.id,
     },
   });
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, { job }, "Job created Successfully"));
+    .status(201)
+    .json(new ApiResponse(201, { job }, "Job created Successfully"));
 });
 
-export { createJob };
+// get all jobs
+const getAllJobs = asyncHandler(async (req, res, next) => {
+  const jobs = await prisma.job.findMany({
+    where: {
+      userId: req.user.id,
+    },
+    // include: {
+    //   user: {
+    //     select: {
+    //       id: true,
+    //       email: true,
+    //     },
+    //   },
+    // },
+  });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { jobs }, "Jobs fetched Successfully"));
+});
+
+export { createJob, getAllJobs };
