@@ -52,14 +52,30 @@ const updateJob = asyncHandler(async (req, res, next) => {
   const { jobId } = req.params;
   const { company, role } = req.body;
 
+  // validate jobId
   if (!jobId) {
     throw new ApiError(401, "Invalid job id");
   }
 
-  const job = await prisma.job.update({
+  // Find job
+  const job = await prisma.job.findUnique({
+    where: { id: jobId },
+  });
+
+  // check if job exists
+  if (!job) {
+    throw new ApiError(404, "Job not found");
+  }
+
+  // ownership check
+  if (job.userId !== req.user.id) {
+    throw new ApiError(403, "You are not allowed to update job");
+  }
+
+  // update job
+  const updatedJob = await prisma.job.update({
     where: {
       id: jobId,
-      userId: req.user.id,
     },
     data: {
       company: company,
@@ -70,7 +86,11 @@ const updateJob = asyncHandler(async (req, res, next) => {
   return res
     .status(201)
     .json(
-      new ApiResponse(201, { job }, `Updated the ${jobId} data Successfully`),
+      new ApiResponse(
+        201,
+        { updatedJob },
+        `Updated the ${jobId} data Successfully`,
+      ),
     );
 });
 
@@ -81,16 +101,25 @@ const deleteJob = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "Invalid job id");
   }
 
-  const job = await prisma.job.delete({
-    where: {
-      id: jobId,
-      userId: req.user.id,
-    },
+  const job = await prisma.job.findUnique({
+    where: { id: jobId },
+  });
+
+  if (!job) {
+    throw new ApiError(404, "Job not found");
+  }
+
+  if (job.userId !== req.user.id) {
+    throw new ApiError(403, "You are not allowed to delete this job");
+  }
+
+  await prisma.job.delete({
+    where: { id: jobId },
   });
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { job }, "Delete Job Successfully"));
+    .json(new ApiResponse(200, null, "Job deleted Successfully"));
 });
 
 export { createJob, getAllJobs, updateJob, deleteJob };
