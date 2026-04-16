@@ -122,4 +122,46 @@ const deleteJob = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, null, "Job deleted Successfully"));
 });
 
-export { createJob, getAllJobs, updateJob, deleteJob };
+const updateJobStatus = asyncHandler(async (req, res, next) => {
+  const { jobId } = req.params;
+  const { status } = req.body;
+
+  if (!jobId) {
+    throw new ApiError(400, "Invalid job Id");
+  }
+
+  const job = await prisma.job.findUnique({
+    where: { id: jobId },
+  });
+
+  if (!job) {
+    throw new ApiError(404, "Job not found");
+  }
+
+  if (job.userId !== req.user.id) {
+    throw new ApiError(403, "You are not allowed to update the Job status");
+  }
+
+  const validStatuses = ["APPLIED", "INTERVIEW", "REJECTED", "OFFER"];
+
+  if (!validStatuses.includes(status)) {
+    throw new ApiError(400, "Invalid status");
+  }
+
+  const updateStatus = await prisma.job.update({
+    where: {
+      id: jobId,
+    },
+    data: {
+      status: status,
+    },
+  });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, updateStatus, "Updated job status successfully"),
+    );
+});
+
+export { createJob, getAllJobs, updateJob, deleteJob, updateJobStatus };
