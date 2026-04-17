@@ -24,28 +24,28 @@ const createJob = asyncHandler(async (req, res, next) => {
 });
 
 // get all jobs
-const getAllJobs = asyncHandler(async (req, res, next) => {
-  console.log("Current userId:", req.user.id);
-  const jobs = await prisma.job.findMany({
-    where: {
-      userId: req.user.id,
-    },
-    // include: {
-    //   user: {
-    //     select: {
-    //       id: true,
-    //       email: true,
-    //     },
-    //   },
-    // },
-  });
+// const getAllJobs = asyncHandler(async (req, res, next) => {
+//   console.log("Current userId:", req.user.id);
+//   const jobs = await prisma.job.findMany({
+//     where: {
+//       userId: req.user.id,
+//     },
+//     // include: {
+//     //   user: {
+//     //     select: {
+//     //       id: true,
+//     //       email: true,
+//     //     },
+//     //   },
+//     // },
+//   });
 
-  console.log("Jobs found:", jobs.length);
+//   console.log("Jobs found:", jobs.length);
 
-  return res
-    .status(200)
-    .json(new ApiResponse(200, jobs, "Jobs fetched Successfully"));
-});
+//   return res
+//     .status(200)
+//     .json(new ApiResponse(200, jobs, "Jobs fetched Successfully"));
+// });
 
 // update job by id
 const updateJob = asyncHandler(async (req, res, next) => {
@@ -94,6 +94,7 @@ const updateJob = asyncHandler(async (req, res, next) => {
     );
 });
 
+// delete job by id
 const deleteJob = asyncHandler(async (req, res, next) => {
   const { jobId } = req.params;
 
@@ -122,6 +123,7 @@ const deleteJob = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, null, "Job deleted Successfully"));
 });
 
+// update job status
 const updateJobStatus = asyncHandler(async (req, res, next) => {
   const { jobId } = req.params;
   const { status } = req.body;
@@ -162,6 +164,83 @@ const updateJobStatus = asyncHandler(async (req, res, next) => {
     .json(
       new ApiResponse(200, updateStatus, "Updated job status successfully"),
     );
+});
+
+const getAllJobs = asyncHandler(async (req, res, next) => {
+  // we usually use query for filter or search
+  const { page, limit, sort, status, search } = req.query;
+
+  // convert to numbers for pagination
+  const pageNum = Number(page) || 1;
+  const limitNum = Number(limit) || 10;
+  const skip = (pageNum - 1) * limitNum;
+
+  const filter = {};
+
+  // we know in mongodb we use $regex: query, options: "i" but for prisma we use contains instead of regex and mode:"insensitive" instead of options
+  // SEARCH ROLE + COMPANY
+  if (search) {
+    filter.OR = [
+      {
+        role: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        company: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    ];
+  }
+
+  // STATUS FILTER FORM THE PRISMA ENUM
+  const validStatuses = ["APPLIED", "INTERVIEW", "REJECTED", "OFFER"];
+
+  if (status && validStatuses.includes(status)) {
+    filter.status = status;
+  }
+
+  // USER FILTER
+  filter.userId = req.user.id;
+
+  // SORTING
+  let orderBy = {};
+
+  if (sort === "oldest") orderBy = { createdAt: "asc" };
+  else if (sort === "a-z") orderBy = { company: "asc" };
+  else if (sort === "z-a") orderBy = { company: "desc" };
+  else if (sort === "status") orderBy = { status: "asc" };
+
+  const jobs = await prisma.job.findMany({
+    where: filter,
+    orderBy,
+    skip,
+    take: limitNum,
+  });
+
+  if (!jobs || jobs.length === 0) {
+    throw new ApiError(404, "Jobs not found");
+  }
+
+  const totalJobs = await prisma.job.count({
+    where: filter,
+  });
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        jobs: jobs,
+        totalJobs,
+        totalPages: Math.ceil(totalJobs / limitNum),
+        currentPage: pageNum,
+      },
+      "Jobs fetched successfully",
+    ),
+  );
 });
 
 export { createJob, getAllJobs, updateJob, deleteJob, updateJobStatus };
