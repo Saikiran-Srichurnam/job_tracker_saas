@@ -3,6 +3,7 @@ import {
   createJob,
   deleteJob,
   getAllJobs,
+  getJobStats,
   updateJob,
   updateJobStatus,
 } from "../controllers/job.controllers.js";
@@ -15,5 +16,6 @@ router.route("/").get(verifyJWT, getAllJobs);
 router.route("/:jobId").patch(verifyJWT, updateJob);
 router.route("/:jobId").delete(verifyJWT, deleteJob);
 router.route("/:jobId/status").patch(verifyJWT, updateJobStatus);
+router.route("/stats").get(verifyJWT, getJobStats);
 
 export default router;

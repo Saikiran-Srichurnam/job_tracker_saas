@@ -207,7 +207,7 @@ const getAllJobs = asyncHandler(async (req, res, next) => {
   filter.userId = req.user.id;
 
   // SORTING
-  let orderBy = {};
+  let orderBy = { createdAt: "desc" };
 
   if (sort === "oldest") orderBy = { createdAt: "asc" };
   else if (sort === "a-z") orderBy = { company: "asc" };
@@ -243,4 +243,45 @@ const getAllJobs = asyncHandler(async (req, res, next) => {
   );
 });
 
-export { createJob, getAllJobs, updateJob, deleteJob, updateJobStatus };
+const getJobStats = asyncHandler(async (req, res, next) => {
+  const jobs = await prisma.job.findMany({
+    where: {
+      userId: req.user.id,
+    },
+  });
+
+  const appliedJobs = jobs.filter((job) => job.status === "APPLIED");
+  const interviewJobs = jobs.filter((job) => job.status === "INTERVIEW");
+  const rejectedJobs = jobs.filter((job) => job.status === "REJECTED");
+  const offerJobs = jobs.filter((job) => job.status === "OFFER");
+
+  const totalJobsCount = jobs.length;
+  const appliedJobsCount = appliedJobs.length;
+  const interviewJobsCount = interviewJobs.length;
+  const rejectedJobsCount = rejectedJobs.length;
+  const offerJobsCount = offerJobs.length;
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        totalJobsCount,
+        appliedJobsCount,
+        interviewJobsCount,
+        rejectedJobsCount,
+        offerJobsCount,
+        appliedJobs,
+      },
+      "Get job stats fetched successfully",
+    ),
+  );
+});
+
+export {
+  createJob,
+  getAllJobs,
+  updateJob,
+  deleteJob,
+  updateJobStatus,
+  getJobStats,
+};
