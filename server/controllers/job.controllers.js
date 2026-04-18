@@ -244,22 +244,53 @@ const getAllJobs = asyncHandler(async (req, res, next) => {
 });
 
 const getJobStats = asyncHandler(async (req, res, next) => {
-  const jobs = await prisma.job.findMany({
-    where: {
-      userId: req.user.id,
-    },
-  });
+  const [
+    totalJobsCount,
+    appliedJobsCount,
+    interviewJobsCount,
+    rejectedJobsCount,
+    offerJobsCount,
+  ] = await Promise.all([
+    prisma.job.count({
+      where: {
+        userId: req.user.id,
+      },
+    }),
 
-  const appliedJobs = jobs.filter((job) => job.status === "APPLIED");
-  const interviewJobs = jobs.filter((job) => job.status === "INTERVIEW");
-  const rejectedJobs = jobs.filter((job) => job.status === "REJECTED");
-  const offerJobs = jobs.filter((job) => job.status === "OFFER");
+    prisma.job.count({
+      where: {
+        userId: req.user.id,
+        status: "APPLIED",
+      },
+    }),
 
-  const totalJobsCount = jobs.length;
-  const appliedJobsCount = appliedJobs.length;
-  const interviewJobsCount = interviewJobs.length;
-  const rejectedJobsCount = rejectedJobs.length;
-  const offerJobsCount = offerJobs.length;
+    prisma.job.count({
+      where: {
+        userId: req.user.id,
+        status: "INTERVIEW",
+      },
+    }),
+
+    prisma.job.count({
+      where: {
+        userId: req.user.id,
+        status: "REJECTED",
+      },
+    }),
+
+    prisma.job.count({
+      where: {
+        userId: req.user.id,
+        status: "OFFER",
+      },
+    }),
+  ]);
+
+  // const totalJobsCount = jobs.length;
+  // const appliedJobsCount = jobs.filter((job) => job.status === "APPLIED").length;
+  // const interviewJobsCount = jobs.filter((job) => job.status === "INTERVIEW").length;
+  // const rejectedJobsCount = jobs.filter((job) => job.status === "REJECTED").length;
+  // const offerJobsCount = jobs.filter((job) => job.status === "OFFER").length;
 
   return res.status(200).json(
     new ApiResponse(
@@ -270,9 +301,8 @@ const getJobStats = asyncHandler(async (req, res, next) => {
         interviewJobsCount,
         rejectedJobsCount,
         offerJobsCount,
-        appliedJobs,
       },
-      "Get job stats fetched successfully",
+      "Job stats fetched successfully",
     ),
   );
 });
