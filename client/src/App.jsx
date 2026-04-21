@@ -1,8 +1,14 @@
+import { Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 function App() {
   return (
-    <h1 className="text-3xl font-bold text-blue-500">
-      Tailwind is working 🚀
-    </h1>
+    <div className="bg-black/80 h-screen w-full text-white flex justify-center items-center">
+      <Route path="/" element={<Register />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+    </div>
   );
 }
 
