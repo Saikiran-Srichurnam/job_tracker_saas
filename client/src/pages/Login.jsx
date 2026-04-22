@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import InputBox from "../components/InputBox.jsx";
-import PasswordBox from "../components/PasswordBox.jsx";
-import LoginButton from "../components/LoginButton.jsx";
 import Register from "./Register.jsx";
 import { Link } from "react-router-dom";
 
@@ -9,11 +6,14 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginForm =(e) => {
-    e.preventdefault()
-  }
+  const handleLoginForm = (e) => {
+    e.preventdefault();
+  };
   return (
-    <form className="w-80 border border-white/30 min-h-32 p-8 flex justify-center flex-col items-center gap-5" onSubmit={handleLoginForm}>
+    <form
+      className="w-80 border border-white/30 min-h-32 p-8 flex justify-center flex-col items-center gap-5"
+      onSubmit={handleLoginForm}
+    >
       <input
         type="email"
         placeholder="Enter your email"

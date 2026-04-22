@@ -2,10 +2,29 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import { BrowserRouter } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="*" element={<div>Not Found</div>}>
+        Future improvement
+      </Route>
+      <Route path="/" element={<Register />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+    </>,
+  ),
+);
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <RouterProvider router={router}>
     <App />
-  </BrowserRouter>,
+  </RouterProvider>,
 );

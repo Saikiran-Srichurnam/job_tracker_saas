@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import Username from "../components/Username.jsx";
-import InputBox from "../components/InputBox.jsx";
-import PasswordBox from "../components/PasswordBox.jsx";
-import LoginButton from "../components/LoginButton.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/userApi.js";
 
@@ -31,7 +27,7 @@ function Register() {
   };
   return (
     <form
-      className="w-80 border border-white/30 min-h-32 p-8 flex justify-center flex-col items-center gap-5"
+      className="w-80 border border-white/30 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-white"
       onSubmit={handleRegisterForm}
     >
       <input
