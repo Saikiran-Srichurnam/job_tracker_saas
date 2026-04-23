@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/userApi.js";
 
 function Register() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
 
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ function Register() {
 
     try {
       const res = await registerUser({
-        username,
+        name,
         email,
         password,
       });
@@ -35,8 +35,8 @@ function Register() {
         placeholder="Enter your Username"
         className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
         required
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <input
         type="email"
@@ -55,7 +55,10 @@ function Register() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl">
+      <button
+        type="submit"
+        className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl"
+      >
         Register
       </button>
       <p className="text-gray-500">
