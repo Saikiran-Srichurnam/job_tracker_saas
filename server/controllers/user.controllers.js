@@ -150,4 +150,40 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Logout User
+const logoutUser = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: currentUser.userId,
+      },
+    });
+
+    if (!user) {
+      throw new ApiError(400, "Invalid user id");
+    }
+
+    await prisma.refreshToken.deleteMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    const options = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    };
+    return res
+      .status(200)
+      .clearCookie("accessToken") 
+      .clearCookie("refreshToken")
+      .json(new ApiResponse(200, null, "User logged out Successfully"));
+  } catch (error) {
+    console.log("Logout failed:", error);
+    throw new ApiError(400, error.message);
+  }
+});
+
 export { generateRefreshAndAccessToken, registerUser, loginUser };
