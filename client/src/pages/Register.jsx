@@ -26,48 +26,52 @@ function Register() {
     }
   };
   return (
-    <form
-      className="w-80 border border-white/30 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-white"
-      onSubmit={handleRegisterForm}
-    >
-      <input
-        type="text"
-        placeholder="Enter your Username"
-        className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
-        required
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="email"
-        placeholder="Enter your email"
-        className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <div className="bg-white/40 p-8 rounded-lg shadow-lg flex justify-center items-center h-screen duration-300">
+      <div className="bg-black/80  p-10 rounded-md border-none">
+        <form
+          className="w-80 border border-white/40 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-white shadow-2xl"
+          onSubmit={handleRegisterForm}
+        >
+          <input
+            type="text"
+            placeholder="Enter your Username"
+            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-      <input
-        type="password"
-        placeholder="Enter your password"
-        className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button
-        type="submit"
-        className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl"
-      >
-        Register
-      </button>
-      <p className="text-gray-500">
-        Already have an account?{" "}
-        <Link to="/login" className="text-white/80">
-          Login
-        </Link>
-      </p>
-    </form>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl"
+          >
+            Register
+          </button>
+          <p className="text-gray-500">
+            Already have an account?{" "}
+            <Link to="/login" className="text-white/80">
+              Login
+            </Link>
+          </p>
+        </form>
+      </div>
+    </div>
   );
 }
 

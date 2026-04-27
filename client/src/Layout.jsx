@@ -5,9 +5,11 @@ import React from "react";
 
 function Layout() {
   return (
-    <div className="bg-black/80 h-screen w-full text-white flex justify-center items-center">
+    <div>
       <Header />
-      <Outlet />
+      <div className="flex flex-1 justify-center items-center">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
