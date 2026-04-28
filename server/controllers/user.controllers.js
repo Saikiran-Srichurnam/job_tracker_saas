@@ -177,7 +177,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     };
     return res
       .status(200)
-      .clearCookie("accessToken") 
+      .clearCookie("accessToken")
       .clearCookie("refreshToken")
       .json(new ApiResponse(200, null, "User logged out Successfully"));
   } catch (error) {
@@ -186,4 +186,32 @@ const logoutUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { generateRefreshAndAccessToken, registerUser, loginUser, logoutUser };
+const getCurrentUser = asyncHandler(async (req, res) => {
+  const currentUser = req.user;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: currentUser.userId,
+      },
+    });
+
+    if (!user) {
+      throw new ApiError(400, "User not found");
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, user, "Current user fetched successfully"));
+  } catch (error) {
+    console.log("Fetching current user failed:", error);
+    throw new ApiError(400, error.message);
+  }
+});
+
+export {
+  generateRefreshAndAccessToken,
+  registerUser,
+  loginUser,
+  logoutUser,
+  getCurrentUser,
+};
