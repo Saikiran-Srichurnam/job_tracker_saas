@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/userApi.js";
 
 function Register() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -14,7 +14,7 @@ function Register() {
 
     try {
       const res = await registerUser({
-        name,
+        username,
         email,
         password,
       });
@@ -37,8 +37,8 @@ function Register() {
             placeholder="Enter your Username"
             className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="email"

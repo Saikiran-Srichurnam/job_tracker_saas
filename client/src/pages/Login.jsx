@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import Register from "./Register.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../services/userApi.js";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginForm = (e) => {
-    e.preventdefault();
+  const navigate = useNavigate();
+
+  const handleLoginForm = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await loginUser({
+        email,
+        password,
+      });
+
+      console.log(res);
+      navigate("/register");
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="bg-white/40 p-8 rounded-lg shadow-lg flex justify-center items-center h-screen duration-300">
