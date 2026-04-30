@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Register from "./Register.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/userApi.js";
-
+import Dashboard from "../components/Dashboard/Dashboard.jsx";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ function Login() {
       });
 
       console.log(res);
-      navigate("/register");
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }
