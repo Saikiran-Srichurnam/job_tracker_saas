@@ -70,7 +70,7 @@ function Dashboard() {
           </div>
 
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:duration-300 hover:bg-white/30">
               Frontend Developer - Google
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">

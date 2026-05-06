@@ -49,7 +49,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           {}
-          <button className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl">
+          <button className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl tracking-wider">
             LOGIN
           </button>
           {}

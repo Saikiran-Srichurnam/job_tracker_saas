@@ -59,7 +59,7 @@ function Register() {
           />
           <button
             type="submit"
-            className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl"
+            className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl tracking-wider"
           >
             Register
           </button>

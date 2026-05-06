@@ -11,16 +11,19 @@ import {
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="*" element={<div>Not Found</div>}>
-        Future improvement
-      </Route>
-      <Route path="/" element={<Register />} />
+      {/* public routes */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+
+      {/* protected routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
       <Route path="/dashboard" element={<Dashboard />} />
     </>,
   ),
