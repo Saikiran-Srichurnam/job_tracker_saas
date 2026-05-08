@@ -12,6 +12,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,12 +25,13 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
-      <Route path="/dashboard" element={<Dashboard />} />
     </>,
   ),
 );
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router}>
-    <App />
-  </RouterProvider>,
+  <AuthProvider>
+    <RouterProvider router={router}>
+      <App />
+    </RouterProvider>
+  </AuthProvider>,
 );

@@ -3,20 +3,24 @@ import Register from "./Register.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/userApi.js";
 import Dashboard from "../components/Dashboard/Dashboard.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const { login } = useAuth();
+
 
   const handleLoginForm = async (e) => {
     e.preventDefault();
-
     try {
       const res = await loginUser({
         email,
         password,
       });
+      await login();
 
       console.log(res);
       navigate("/dashboard");
