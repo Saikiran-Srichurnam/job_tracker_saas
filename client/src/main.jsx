@@ -19,6 +19,7 @@ const router = createBrowserRouter(
     <>
       {/* public routes */}
       <Route path="/register" element={<Register />} />
+      <Route path="/" element={<Register />} />
       <Route path="/login" element={<Login />} />
 
       {/* protected routes */}
