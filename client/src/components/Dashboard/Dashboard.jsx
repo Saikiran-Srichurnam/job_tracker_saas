@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getAllJobs, getJobStats } from "../../services/jobsApi.js";
+import React from "react";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import StatsCards from "./StatsCards.jsx";
