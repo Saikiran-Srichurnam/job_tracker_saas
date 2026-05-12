@@ -3,6 +3,7 @@ import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import StatsCards from "./StatsCards.jsx";
 import JobsList from "./JobsList.jsx";
+import AddJobModal from "./AddJobModal.jsx";
 
 function Dashboard() {
   return (
@@ -21,9 +22,8 @@ function Dashboard() {
             Track applications, interviews, offers, and progress with one
             premium dashboard.
           </p>
-          <button className="mt-6 px-6 py-3 bg-white text-slate-900 rounded-xl font-semibold hover:scale-105 duration-300">
-            Add New Job
-          </button>
+          {/* Add Job Button */}
+          <AddJobModal />
         </div>
 
         {/* Stats Cards */}
