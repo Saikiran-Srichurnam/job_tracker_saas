@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { getJobStats } from "../../services/jobsApi";
+import React from "react";
 
-function StatsCards() {
-  const [jobsData, setJobsData] = useState({});
+function StatsCards({jobsData}) {
+  // const [jobsData, setJobsData] = useState({});
 
-  useEffect(() => {
-    const fetchJobsStats = async () => {
-      try {
-        const jobs = await getJobStats();
-        console.log(jobs);
-        setJobsData(jobs.data);
-      } catch (error) {
-        console.log(error);
-        return error.message;
-      }
-    };
+  // useEffect(() => {
+  //   const fetchJobsStats = async () => {
+  //     try {
+  //       const jobs = await getJobStats();
+  //       console.log(jobs);
+  //       setJobsData(jobs.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //       return error.message;
+  //     }
+  //   };
 
-    fetchJobsStats();
-  }, []);
+  //   fetchJobsStats();
+  // }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-8">
       <div className="bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">

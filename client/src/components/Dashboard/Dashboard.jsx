@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import StatsCards from "./StatsCards.jsx";
 import JobsList from "./JobsList.jsx";
 import AddJobModal from "./AddJobModal.jsx";
+import { getAllJobs, getJobStats } from "../../services/jobsApi.js";
 
 function Dashboard() {
+  const [jobsData, setJobsData] = useState({});
+  const [jobs, setJobs] = useState([]);
+
+  const fetchDashboardData = async () => {
+    try {
+      const res = await getAllJobs();
+      const jobs = await getJobStats();
+      console.log(res);
+      setJobs(res.data.jobs);
+      console.log(jobs);
+      setJobsData(jobs.data);
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white flex flex-col">
       {/* Header */}
@@ -23,14 +45,17 @@ function Dashboard() {
             premium dashboard.
           </p>
           {/* Add Job Button */}
-          <AddJobModal />
+          <AddJobModal fetchDashboardData={fetchDashboardData} />
         </div>
 
         {/* Stats Cards */}
-        <StatsCards />
+        <StatsCards
+          jobsData={jobsData}
+          fetchDashboardData={fetchDashboardData}
+        />
 
         {/* Recent Jobs */}
-        <JobsList />
+        <JobsList jobs={jobs} fetchDashboardData={fetchDashboardData} />
       </main>
 
       {/* Footer */}

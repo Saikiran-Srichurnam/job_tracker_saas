@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createJob } from "../../services/jobsApi.js";
 
-function AddJobModal() {
+function AddJobModal({ fetchDashboardData }) {
   const [jobModal, setJobModal] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [roleName, setRoleName] = useState("");
@@ -15,12 +15,21 @@ function AddJobModal() {
         role: roleName,
       });
       console.log(res);
+
+      await fetchDashboardData();
+
+      setCompanyName("");
+      setRoleName("");
+
+      setJobModal(false);
+      document.body.style.overflow = "auto";
     } catch (error) {
       console.log(error.message);
       return error;
     }
+  };
 
-    // job modal state changed from false to true
+  const handleClose = () => {
     setJobModal(false);
     document.body.style.overflow = "auto";
   };
@@ -41,7 +50,7 @@ function AddJobModal() {
         <div className="fixed inset-0 bg-black/5 backdrop-blur-sm flex justify-center items-center z-50">
           <form
             onSubmit={handleSubmit}
-            className="bg-black/50 text-white p-8 rounded-2xl shadow-2xl animate-popup flex flex-col justify-between h-[400px] w-[360px]"
+            className="bg-black/50 text-white p-8 rounded-2xl shadow-2xl animate-popup flex flex-col justify-between h-[400px] w-[360px] border-2 border-white/30"
           >
             <h1 className="text-2xl font-bold text-center tracking-wider underline underline-offset-8">
               CREATE NEW JOB
@@ -73,9 +82,17 @@ function AddJobModal() {
               />
             </div>
 
-            <button className="flex justify-center items-center mt-4 px-4 py-2 bg-white text-black rounded-lg">
-              Submit
-            </button>
+            <div className="flex justify-between items-center mt-4">
+              <button className="px-4 py-2 bg-white text-black rounded-lg hover:duration-300 hover:bg-white/20 hover:border-2 hover:border-white/30 border-2 text-md font-semibold hover:text-white">
+                submit
+              </button>
+              <button
+                className="px-4 py-2 bg-white text-black rounded-lg hover:duration-300 hover:bg-white/20 hover:border-2 hover:border-white/30 border-2 text-md font-semibold hover:text-white"
+                onClick={handleClose}
+              >
+                close
+              </button>
+            </div>
           </form>
         </div>
       )}
