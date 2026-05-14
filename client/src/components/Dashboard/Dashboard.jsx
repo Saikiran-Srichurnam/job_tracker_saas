@@ -9,6 +9,8 @@ import { getAllJobs, getJobStats } from "../../services/jobsApi.js";
 function Dashboard() {
   const [jobsData, setJobsData] = useState({});
   const [jobs, setJobs] = useState([]);
+  const [jobModal, setJobModal] = useState(false);
+  const [editJob, setEditJob] = useState(null);
 
   const fetchDashboardData = async () => {
     try {
@@ -45,7 +47,13 @@ function Dashboard() {
             premium dashboard.
           </p>
           {/* Add Job Button */}
-          <AddJobModal fetchDashboardData={fetchDashboardData} />
+          <AddJobModal
+            fetchDashboardData={fetchDashboardData}
+            setEditJob={setEditJob}
+            setJobModal={setJobModal}
+            jobModal={jobModal}
+            editJob={editJob}
+          />
         </div>
 
         {/* Stats Cards */}
@@ -55,7 +63,12 @@ function Dashboard() {
         />
 
         {/* Recent Jobs */}
-        <JobsList jobs={jobs} fetchDashboardData={fetchDashboardData} />
+        <JobsList
+          jobs={jobs}
+          fetchDashboardData={fetchDashboardData}
+          setEditJob={setEditJob}
+          setJobModal={setJobModal}
+        />
       </main>
 
       {/* Footer */}

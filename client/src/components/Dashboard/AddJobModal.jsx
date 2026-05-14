@@ -1,8 +1,13 @@
-import React, { useState } from "react";
-import { createJob } from "../../services/jobsApi.js";
+import React, { useEffect, useState } from "react";
+import { createJob, updateJob } from "../../services/jobsApi.js";
 
-function AddJobModal({ fetchDashboardData }) {
-  const [jobModal, setJobModal] = useState(false);
+function AddJobModal({
+  fetchDashboardData,
+  editJob,
+  setEditJob,
+  jobModal,
+  setJobModal,
+}) {
   const [companyName, setCompanyName] = useState("");
   const [roleName, setRoleName] = useState("");
 
@@ -10,14 +15,25 @@ function AddJobModal({ fetchDashboardData }) {
     e.preventDefault();
 
     try {
-      const res = await createJob({
-        company: companyName,
-        role: roleName,
-      });
-      console.log(res);
+      if (editJob) {
+        await updateJob(
+          {
+            company: companyName,
+            role: roleName,
+          },
+          editJob.id,
+        );
+      } else {
+        const res = await createJob({
+          company: companyName,
+          role: roleName,
+        });
+        console.log(res);
+      }
 
       await fetchDashboardData();
 
+      setEditJob(null);
       setCompanyName("");
       setRoleName("");
 
@@ -30,9 +46,19 @@ function AddJobModal({ fetchDashboardData }) {
   };
 
   const handleClose = () => {
+    setEditJob(null);
+    setCompanyName("");
+    setRoleName("");
     setJobModal(false);
     document.body.style.overflow = "auto";
   };
+
+  useEffect(() => {
+    if (editJob) {
+      setCompanyName(editJob.company);
+      setRoleName(editJob.role);
+    }
+  }, [editJob]);
 
   return (
     <>
@@ -53,7 +79,7 @@ function AddJobModal({ fetchDashboardData }) {
             className="bg-black/50 text-white p-8 rounded-2xl shadow-2xl animate-popup flex flex-col justify-between h-[400px] w-[360px] border-2 border-white/30"
           >
             <h1 className="text-2xl font-bold text-center tracking-wider underline underline-offset-8">
-              CREATE NEW JOB
+              {editJob ? "UPDATE JOB" : "CREATE NEW JOB"}
             </h1>
             <div className="flex flex-col justify-start">
               <label htmlFor="company" className="text-lg font-serif">
@@ -84,13 +110,13 @@ function AddJobModal({ fetchDashboardData }) {
 
             <div className="flex justify-between items-center mt-4">
               <button className="px-4 py-2 bg-white text-black rounded-lg hover:duration-300 hover:bg-white/20 hover:border-2 hover:border-white/30 border-2 text-md font-semibold hover:text-white">
-                submit
+                {editJob ? "Update Job" : "Submit"}
               </button>
               <button
                 className="px-4 py-2 bg-white text-black rounded-lg hover:duration-300 hover:bg-white/20 hover:border-2 hover:border-white/30 border-2 text-md font-semibold hover:text-white"
                 onClick={handleClose}
               >
-                close
+                {editJob ? "Cancel" : "Close"}
               </button>
             </div>
           </form>

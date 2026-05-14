@@ -21,7 +21,7 @@ export const createJob = async (jobData) => {
 };
 
 // UPDATE JOB
-export const updatedJob = async (jobData, jobId) => {
+export const updateJob = async (jobData, jobId) => {
   try {
     const response = await api.patch(`/jobs/${jobId}`, jobData);
     return response.data;

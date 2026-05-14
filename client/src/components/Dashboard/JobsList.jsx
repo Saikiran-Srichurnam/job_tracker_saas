@@ -1,7 +1,17 @@
 import React from "react";
+import { updateJobStatus } from "../../services/jobsApi";
 
-function JobsList({ jobs }) {
-  
+function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
+  const handleStatusChange = async (jobId, status) => {
+    try {
+      await updateJobStatus(jobId, status);
+
+      await fetchDashboardData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mt-8 shadow-2xl">
       <div className="flex justify-between items-center mb-5">
@@ -19,7 +29,25 @@ function JobsList({ jobs }) {
           >
             {job.role} - {job.company}
             <div className="mr-20 flex gap-10">
-              <button className="hover:cursor-pointer px-4 py-2 hover:bg-blue-500/20 bg-gray-500/20 text-blue-300 rounded-lg transition duration-300 border border-gray-400/30 text-sm font-semibold backdrop-blur-md hover:text-blue-500" >
+              <select
+                value={job.status}
+                onChange={(e) => handleStatusChange(job.id, e.target.value)}
+                className="bg-black/40 border border-white/20 rounded-lg px-3 py-2 text-white outline-none"
+              >
+                <option value="APPLIED">APPLIED</option>
+                <option value="INTERVIEW">INTERVIEW</option>
+                <option value="OFFER">OFFER</option>
+                <option value="REJECTED">REJECTED</option>
+              </select>
+              <button
+                className="hover:cursor-pointer px-4 py-2 hover:bg-blue-500/20 bg-gray-500/20 text-blue-300 rounded-lg transition duration-300 border border-gray-400/30 text-sm font-semibold backdrop-blur-md hover:text-blue-500"
+                onClick={() => {
+                  setEditJob(job);
+                  setJobModal(true);
+
+                  document.body.style.overflow = "hidden";
+                }}
+              >
                 ✏️
               </button>
               <button className="hover:cursor-pointer px-4 py-2 hover:bg-red-500/20 bg-red-500/5 text-red-300 hover:text-white rounded-lg transition duration-300 border border-red-400/30 text-sm font-semibold backdrop-blur-md">
