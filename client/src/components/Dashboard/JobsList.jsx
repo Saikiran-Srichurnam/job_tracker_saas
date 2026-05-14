@@ -19,9 +19,8 @@ function JobsList({ jobs }) {
           >
             {job.role} - {job.company}
             <div className="mr-20 flex gap-10">
-              <button className="hover:cursor-pointer px-4 py-2 hover:bg-blue-500/20 bg-gray-500/20 text-blue-300 rounded-lg transition duration-300 border border-gray-400/30 text-sm font-semibold backdrop-blur-md hover:text-blue-500" 
-              onClick={handleEditBtn}>
-                ✏️ edit
+              <button className="hover:cursor-pointer px-4 py-2 hover:bg-blue-500/20 bg-gray-500/20 text-blue-300 rounded-lg transition duration-300 border border-gray-400/30 text-sm font-semibold backdrop-blur-md hover:text-blue-500" >
+                ✏️
               </button>
               <button className="hover:cursor-pointer px-4 py-2 hover:bg-red-500/20 bg-red-500/5 text-red-300 hover:text-white rounded-lg transition duration-300 border border-red-400/30 text-sm font-semibold backdrop-blur-md">
                 ❌
