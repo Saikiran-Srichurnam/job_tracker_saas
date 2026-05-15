@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { updateJobStatus, deleteJob } from "../../services/jobsApi.js";
 
 function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
@@ -24,17 +24,25 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
     }
   };
 
+  // show only first three jobs view button functionality
+  const [showAllJobs, setShowAllJobs] = useState(false);
+
+  const displayJobs = showAllJobs ? jobs : jobs.slice(0, 3);
+
   return (
     <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mt-8 shadow-2xl">
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-2xl font-semibold">Recent Applications</h3>
-        <button className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium">
-          View All
+        <button
+          className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium"
+          onClick={() => setShowAllJobs(!showAllJobs)}
+        >
+          {showAllJobs ? "Show less " : "View all"}
         </button>
       </div>
 
       <div className="space-y-4">
-        {jobs.map((job) => (
+        {displayJobs.map((job) => (
           <div
             className="p-4 rounded-xl bg-white/5 border border-white/10 hover:duration-300 hover:border-white/60 hover:text-slate-300 w-full flex justify-between items-center"
             key={job.id}
