@@ -1,5 +1,5 @@
 import React from "react";
-import { updateJobStatus } from "../../services/jobsApi";
+import { updateJobStatus, deleteJob } from "../../services/jobsApi.js";
 
 function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
   const handleStatusChange = async (jobId, status) => {
@@ -9,6 +9,18 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
       await fetchDashboardData();
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleDeleteJob = async (jobId) => {
+    try {
+      const res = await deleteJob(jobId);
+      console.log(res);
+
+      await fetchDashboardData();
+    } catch (error) {
+      console.log(error.message);
+      return error;
     }
   };
 
@@ -50,7 +62,10 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
               >
                 ✏️
               </button>
-              <button className="hover:cursor-pointer px-4 py-2 hover:bg-red-500/20 bg-red-500/5 text-red-300 hover:text-white rounded-lg transition duration-300 border border-red-400/30 text-sm font-semibold backdrop-blur-md">
+              <button
+                className="hover:cursor-pointer px-4 py-2 hover:bg-red-500/20 bg-red-500/5 text-red-300 hover:text-white rounded-lg transition duration-300 border border-red-400/30 text-sm font-semibold backdrop-blur-md"
+                onClick={() => handleDeleteJob(job.id)}
+              >
                 ❌
               </button>
             </div>
