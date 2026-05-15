@@ -2,7 +2,7 @@ import React from "react";
 
 function Header() {
   return (
-    <header className="border-b border-white/10 backdrop-blur-md bg-white/5 sticky top-0">
+    <header className="border-b border-white/10 backdrop-blur-md bg-white/5 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-wide">JobTrack Pro</h1>
