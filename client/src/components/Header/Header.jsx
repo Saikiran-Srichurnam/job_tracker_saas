@@ -1,6 +1,20 @@
 import React from "react";
+import { logoutUser } from "../../services/userApi.js";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const res = await logoutUser();
+      console.log(res);
+      navigate("/login");
+    } catch (error) {
+      console.log(error.message);
+      return error;
+    }
+  };
+
   return (
     <header className="border-b border-white/10 backdrop-blur-md bg-white/5 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -12,7 +26,10 @@ function Header() {
           <button className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium hover:scale-105 duration-300">
             Profile
           </button>
-          <button className="px-4 py-2 border border-white/30 rounded-lg hover:bg-white/10 duration-300">
+          <button
+            className="px-4 py-2 border border-white/30 rounded-lg hover:bg-white/10 duration-300"
+            onClick={() => handleLogout()}
+          >
             Logout
           </button>
         </div>
