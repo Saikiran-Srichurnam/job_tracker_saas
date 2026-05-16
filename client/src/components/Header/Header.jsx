@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { logoutUser } from "../../services/userApi.js";
 import { useNavigate } from "react-router-dom";
 
-function Header() {
+function Header({ viewProfile, setViewProfile }) {
   const navigate = useNavigate();
+
+  // handle logout btn
   const handleLogout = async () => {
     try {
       const res = await logoutUser();
@@ -23,9 +25,16 @@ function Header() {
           <p className="text-sm text-gray-300">Premium Job Tracking SaaS</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium hover:scale-105 duration-300">
+          <button
+            className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium hover:scale-105 duration-300"
+            onClick={() => {
+              setViewProfile(true);
+              document.body.style.overflow = "hidden";
+            }}
+          >
             Profile
           </button>
+
           <button
             className="px-4 py-2 border border-white/30 rounded-lg hover:bg-white/10 duration-300"
             onClick={() => handleLogout()}
