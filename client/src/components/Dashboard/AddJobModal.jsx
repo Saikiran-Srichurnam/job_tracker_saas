@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { createJob, updateJob } from "../../services/jobsApi.js";
 
 function AddJobModal({
