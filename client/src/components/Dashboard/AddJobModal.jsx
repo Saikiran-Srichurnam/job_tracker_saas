@@ -7,9 +7,11 @@ function AddJobModal({
   setEditJob,
   jobModal,
   setJobModal,
+  companyName,
+  setCompanyName,
+  roleName,
+  setRoleName
 }) {
-  const [companyName, setCompanyName] = useState("");
-  const [roleName, setRoleName] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

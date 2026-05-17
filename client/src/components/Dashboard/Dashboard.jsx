@@ -5,14 +5,18 @@ import StatsCards from "./StatsCards.jsx";
 import JobsList from "./JobsList.jsx";
 import AddJobModal from "./AddJobModal.jsx";
 import { getAllJobs, getJobStats } from "../../services/jobsApi.js";
-import user from "../../../public/images/user.png";
+import { getCurrentUser } from "../../services/userApi.js";
+import user from "../../images/user.png";
 
 function Dashboard() {
-  const [jobsData, setJobsData] = useState({});
-  const [jobs, setJobs] = useState([]);
-  const [jobModal, setJobModal] = useState(false);
-  const [editJob, setEditJob] = useState(null);
-  const [viewProfile, setViewProfile] = useState(false);
+  const [jobsData, setJobsData] = useState({}); // used in Stats cards component
+  const [jobs, setJobs] = useState([]); // used in Jobs list component
+  const [companyName, setCompanyName] = useState(""); // used in Add job modal component
+  const [roleName, setRoleName] = useState(""); // used in Add job modal component
+  const [jobModal, setJobModal] = useState(false); // used in Add job modal component
+  const [editJob, setEditJob] = useState(null); // used in Add job modal component
+  const [viewProfile, setViewProfile] = useState(false); // used in Header component
+  const [currentUserData, setCurrentUserData] = useState(null); // used in Header component
 
   const fetchDashboardData = async () => {
     try {
@@ -27,15 +31,30 @@ function Dashboard() {
       return error.message;
     }
   };
+  const fetchCurrentUserData = async () => {
+    try {
+      const res = await getCurrentUser();
+      console.log(res);
+      setCurrentUserData(res.data);
+    } catch (error) {
+      console.log(error.message);
+      return error;
+    }
+  };
 
   useEffect(() => {
+    fetchCurrentUserData();
     fetchDashboardData();
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white flex flex-col">
       {/* Header */}
-      <Header viewProfile={viewProfile} setViewProfile={setViewProfile} />
+      <Header
+        setViewProfile={setViewProfile}
+        currentUserData={currentUserData}
+        setCurrentUserData={setCurrentUserData}
+      />
 
       {/* view profile modal */}
       {viewProfile && (
@@ -52,75 +71,87 @@ function Dashboard() {
               <h2 className="text-2xl font-bold mt-4"></h2>
 
               <p className="text-gray-400 text-sm">
-                Welcome back to your dashboard
+                Welcome back to{" "}
+                <span className="text-xl font-semibold capitalize text-white">
+                  {currentUserData?.name}
+                </span>{" "}
+                dashboard
               </p>
             </div>
 
             {/* Profile Stats */}
-            <div className="mt-6 space-y-4 flex-grow">
-              <div className="bg-white/10 border border-white/10 rounded-xl p-4">
+            <div className="mt-6 space-y-4 flex-grow mb-3">
+              <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-4">
                 <p className="text-gray-400 text-sm">Email</p>
 
-                <h3 className="font-semibold mt-1">saikiran.dev@gmail.com</h3>
+                <h3 className="font-semibold mt-1">{currentUserData?.email}</h3>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/10 border border-white/10 rounded-xl p-4">
+                <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-4">
                   <p className="text-gray-400 text-sm">Applications</p>
 
                   <h3 className="text-2xl font-bold mt-1">
-                    {jobsData?.totalJobs || 0}
+                    {jobsData?.totalJobsCount || 0}
                   </h3>
                 </div>
 
-                <div className="bg-white/10 border border-white/10 rounded-xl p-4">
+                <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-4">
                   <p className="text-gray-400 text-sm">Interviews</p>
 
                   <h3 className="text-2xl font-bold mt-1">
-                    {jobsData?.interview || 0}
-                  </h3>
-                </div>
-
-                <div className="bg-white/10 border border-white/10 rounded-xl p-4">
-                  <p className="text-gray-400 text-sm">Offers</p>
-
-                  <h3 className="text-2xl font-bold mt-1">
-                    {jobsData?.offer || 0}
-                  </h3>
-                </div>
-
-                <div className="bg-white/10 border border-white/10 rounded-xl p-4">
-                  <p className="text-gray-400 text-sm">Rejected</p>
-
-                  <h3 className="text-2xl font-bold mt-1">
-                    {jobsData?.rejected || 0}
+                    {jobsData?.interviewJobsCount || 0}
                   </h3>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl p-5 shadow-lg">
+              <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-5">
                 <p className="text-sm text-white/80">Member Since</p>
 
-                <h2 className="text-xl font-bold mt-2">2025</h2>
+                <h2 className="text-xl font-bold mt-2">
+                  {new Date(currentUserData?.createdAt).toLocaleDateString(
+                    "en-IN",
+                    {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    },
+                  )}
+                </h2>
 
                 <p className="text-sm mt-2 text-white/90">
                   Tracking career growth with Job Tracker SaaS.
                 </p>
               </div>
+              <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-5">
+                <h1>Next Interviews List</h1>
+                {jobs &&
+                  jobs
+                    ?.filter((job) => job.status === "INTERVIEW")
+                    .map((job) => (
+                      <div
+                        key={job.id}
+                        className="bg-white/10 border border-white/10 rounded-lg p-3 text-white mt-3"
+                      >
+                        <h2 className="font-semibold text-white">
+                          {job.company} -{" "}
+                          <span className="text-sm text-gray-300">
+                            {job.role}
+                          </span>
+                        </h2>
+                      </div>
+                    ))}
+              </div>
             </div>
 
             {/* Bottom Buttons */}
             <div className="space-y-3 pt-6 border-t border-white/10">
-              <button className="w-full bg-white/10 hover:bg-white/20 transition-all py-3 rounded-xl font-medium">
-                Edit Profile
-              </button>
-
               <button
                 onClick={() => {
                   setViewProfile(false);
                   document.body.style.overflow = "auto";
                 }}
-                className="w-full bg-red-500 hover:bg-red-600 transition-all py-3 rounded-xl font-medium"
+                className="w-full bg-red-500/40 hover:bg-red-500/80 text-white transition-all duration-300 py-3 rounded-xl font-medium hover:scale-[1.02]"
               >
                 Close
               </button>
@@ -142,6 +173,10 @@ function Dashboard() {
           </p>
           {/* Add Job Button */}
           <AddJobModal
+            companyName={companyName}
+            setCompanyName={setCompanyName}
+            roleName={roleName}
+            setRoleName={setRoleName}
             fetchDashboardData={fetchDashboardData}
             setEditJob={setEditJob}
             setJobModal={setJobModal}

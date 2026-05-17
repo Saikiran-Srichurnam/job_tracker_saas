@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { logoutUser } from "../../services/userApi.js";
 import { useNavigate } from "react-router-dom";
 
-function Header({ viewProfile, setViewProfile }) {
+function Header({ setViewProfile }) {
   const navigate = useNavigate();
 
   // handle logout btn
@@ -16,7 +16,6 @@ function Header({ viewProfile, setViewProfile }) {
       return error;
     }
   };
-
   return (
     <header className="border-b border-white/10 backdrop-blur-md bg-white/5 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
