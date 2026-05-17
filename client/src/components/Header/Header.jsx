@@ -18,12 +18,12 @@ function Header({ setViewProfile }) {
   };
   return (
     <header className="border-b border-white/10 backdrop-blur-md bg-white/5 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 sm:items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-wide">JobTrack Pro</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-wide">JobTrack Pro</h1>
           <p className="text-sm text-gray-300">Premium Job Tracking SaaS</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <button
             className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium hover:scale-105 duration-300"
             onClick={() => {

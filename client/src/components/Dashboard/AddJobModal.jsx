@@ -79,7 +79,7 @@ function AddJobModal({
         <div className="fixed inset-0 bg-black/5 backdrop-blur-sm flex justify-center items-center z-50">
           <form
             onSubmit={handleSubmit}
-            className="bg-black/50 text-white p-8 rounded-2xl shadow-2xl animate-popup flex flex-col justify-between h-[400px] w-[360px] border-2 border-white/30"
+            className="bg-black/50 text-white p-6 sm:p-8 rounded-2xl shadow-2xl animate-popup flex flex-col justify-between min-h-[400px] w-[90%] max-w-[360px]"
           >
             <h1 className="text-2xl font-bold text-center tracking-wider underline underline-offset-8">
               {editJob ? "UPDATE JOB" : "CREATE NEW JOB"}

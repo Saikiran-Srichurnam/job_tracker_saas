@@ -44,15 +44,15 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
       <div className="space-y-4">
         {displayJobs.map((job) => (
           <div
-            className="p-4 rounded-xl bg-white/5 border border-white/10 hover:duration-300 hover:border-white/60 hover:text-slate-300 w-full flex justify-between items-center"
+            className="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/60 w-full flex flex-col lg:flex-row gap-4 lg:gap-0 lg:justify-between lg:items-center"
             key={job.id}
           >
             {job.role} - {job.company}
-            <div className="mr-20 flex gap-10">
+            <div className="flex flex-wrap gap-3 sm:gap-4 lg:gap-6">
               <select
                 value={job.status}
                 onChange={(e) => handleStatusChange(job.id, e.target.value)}
-                className="bg-black/40 border border-white/20 rounded-lg px-3 py-2 text-white outline-none"
+                className="bg-black/40 border border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-white outline-none w-full sm:w-auto"
               >
                 <option value="APPLIED">APPLIED</option>
                 <option value="INTERVIEW">INTERVIEW</option>

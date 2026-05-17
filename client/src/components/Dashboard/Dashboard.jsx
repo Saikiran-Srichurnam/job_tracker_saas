@@ -59,7 +59,7 @@ function Dashboard() {
       {/* view profile modal */}
       {viewProfile && (
         <div className="fixed inset-0 z-50 bg-black/10 backdrop-blur-sm flex justify-end w-full">
-          <div className="w-96 min-h-screen overflow-y-auto bg-slate-950 border-l border-white/10 shadow-2xl p-6 flex flex-col">
+          <div className="w-full sm:w-96 min-h-screen overflow-y-auto bg-slate-950 border-l border-white/10 shadow-2xl p-6 flex flex-col">
             {/* Profile Header */}
             <div className="flex flex-col items-center text-center border-b border-white/10 pb-6">
               <img
@@ -134,7 +134,7 @@ function Dashboard() {
                         className="bg-white/10 border border-white/10 rounded-lg p-3 text-white mt-3"
                       >
                         <h2 className="font-semibold text-white">
-                          {job.company} -{" "}
+                          {job.company} -
                           <span className="text-sm text-gray-300">
                             {job.role}
                           </span>
@@ -161,13 +161,13 @@ function Dashboard() {
       )}
 
       {/* Main */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-6 py-8">
+      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8">
         {/* Hero Section */}
         <div className="bg-white/10 border border-white/10 rounded-2xl p-8 shadow-2xl">
-          <h2 className="text-4xl font-bold leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
             Manage Your Career Journey Like a Pro
           </h2>
-          <p className="text-gray-300 mt-3 text-lg">
+          <p className="text-gray-300 mt-3 text-sm sm:text-base lg:text-lg">
             Track applications, interviews, offers, and progress with one
             premium dashboard.
           </p>
