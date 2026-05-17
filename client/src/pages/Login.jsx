@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/userApi.js";
 import Dashboard from "../components/Dashboard/Dashboard.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -23,22 +24,24 @@ function Login() {
       await login();
 
       console.log(res);
+      toast.success("Login Successful");
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
+      toast.error(err?.message || "Login Failed");
     }
   };
   return (
     <div className="bg-white/40 p-8 rounded-lg shadow-lg flex justify-center items-center h-screen duration-300">
-      <div className="bg-black/80  p-10 rounded-md border-none">
+      <div className="bg-black/80 p-6 sm:p-10 w-full max-w-md rounded-md border-none">
         <form
-          className="w-80 border border-white/40 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-white shadow-2xl"
+          className="w-full border border-white/40 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-white shadow-2xl"
           onSubmit={handleLoginForm}
         >
           <input
             type="email"
             placeholder="Enter your email"
-            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black rounded-sm shadow-2xl"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -47,13 +50,13 @@ function Login() {
           <input
             type="password"
             placeholder="Enter your password"
-            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black rounded-sm shadow-2xl"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           {}
-          <button className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl tracking-wider">
+          <button className="px-3 py-2 w-full border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl tracking-wider">
             LOGIN
           </button>
           {}

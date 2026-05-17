@@ -17,9 +17,11 @@ function Dashboard() {
   const [editJob, setEditJob] = useState(null); // used in Add job modal component
   const [viewProfile, setViewProfile] = useState(false); // used in Header component
   const [currentUserData, setCurrentUserData] = useState(null); // used in Header component
+  const [loading, setLoading] = useState(true);
 
   const fetchDashboardData = async () => {
     try {
+      setLoading(true);
       const res = await getAllJobs();
       const jobs = await getJobStats();
       console.log(res);
@@ -29,6 +31,8 @@ function Dashboard() {
     } catch (error) {
       console.log(error);
       return error.message;
+    } finally {
+      setLoading(false);
     }
   };
   const fetchCurrentUserData = async () => {
@@ -46,6 +50,14 @@ function Dashboard() {
     fetchCurrentUserData();
     fetchDashboardData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-slate-950 text-white text-2xl font-semibold">
+        Loading Dashboard...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white flex flex-col">

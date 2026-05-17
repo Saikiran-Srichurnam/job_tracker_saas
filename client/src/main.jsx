@@ -13,6 +13,7 @@ import Register from "./pages/Register.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
 );
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
+    <Toaster position="top-right" />
     <RouterProvider router={router}>
       <App />
     </RouterProvider>

@@ -1,5 +1,6 @@
 import React, { useEffect} from "react";
 import { createJob, updateJob } from "../../services/jobsApi.js";
+import toast from "react-hot-toast";
 
 function AddJobModal({
   fetchDashboardData,
@@ -25,12 +26,14 @@ function AddJobModal({
           },
           editJob.id,
         );
+        toast.success("Job Updated Successfully");
       } else {
         const res = await createJob({
           company: companyName,
           role: roleName,
         });
         console.log(res);
+        toast.success("Job Added Successfully");
       }
 
       await fetchDashboardData();
@@ -43,6 +46,7 @@ function AddJobModal({
       document.body.style.overflow = "auto";
     } catch (error) {
       console.log(error.message);
+      toast.error("Something went wrong");
       return error;
     }
   };

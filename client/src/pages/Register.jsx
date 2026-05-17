@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/userApi.js";
+import toast from "react-hot-toast";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -20,9 +21,11 @@ function Register() {
       });
 
       console.log(res);
+      toast.success("Registration Successful");
       navigate("/login");
     } catch (err) {
       console.error(err);
+      toast.error(err?.message || "Registration Failed");
     }
   };
   return (
