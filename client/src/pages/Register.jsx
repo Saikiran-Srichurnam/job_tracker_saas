@@ -30,15 +30,15 @@ function Register() {
   };
   return (
     <div className="bg-white/40 p-8 rounded-lg shadow-lg flex justify-center items-center h-screen duration-300">
-      <div className="bg-white dark:bg-black/80 p-10 rounded-md border-none">
+      <div className="bg-white dark:bg-black/80 p-6 sm:p-10 w-full max-w-md rounded-md border-none">
         <form
-          className="w-80 border border-white/40 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-black dark:text-white shadow-2xl"
+          className="w-full border border-black/20 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-black dark:text-white shadow-2xl rounded-lg"
           onSubmit={handleRegisterForm}
         >
           <input
             type="text"
             placeholder="Enter your Username"
-            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black text-white rounded-sm shadow-2xl"
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -46,7 +46,7 @@ function Register() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black text-white rounded-sm shadow-2xl"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -55,20 +55,21 @@ function Register() {
           <input
             type="password"
             placeholder="Enter your password"
-            className="px-3 py-2 w-60 border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black rounded-sm shadow-2xl"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button
-            type="submit"
-            className="px-3 py-2 w-60 border-none outline-none bg-white text-black text-lg font-medium rounded-sm shadow-2xl tracking-wider"
-          >
-            Register
+          <button className="relative overflow-hidden px-3 py-2 w-full border border-black/10 outline-none bg-white text-black text-lg font-medium rounded-sm tracking-wider hover:shadow-md group">
+            <span
+              className="
+                  absolute inset-0 bg-black/5 scale-x-0 origin-center transition-transform duration-500 group-hover:scale-x-100"
+            ></span>
+            <span className="relative z-10">REGISTER</span>
           </button>
-          <p className="text-gray-500">
+          <p className="text-black/40 dark:text-gray-500">
             Already have an account?{" "}
-            <Link to="/login" className="text-white/80">
+            <Link to="/login" className="text-black/80 dark:text-white/80">
               Login
             </Link>
           </p>

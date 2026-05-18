@@ -57,8 +57,24 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-slate-950 text-white text-2xl font-semibold">
-        Loading Dashboard...
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-4">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-10 shadow-2xl flex flex-col items-center">
+          {/* Spinner */}
+          <div className="relative w-20 h-20">
+            <div className="absolute inset-0 rounded-full border-[6px] border-cyan-500/20"></div>
+
+            <div className="absolute inset-0 rounded-full border-[6px] border-transparent border-t-cyan-400 animate-spin"></div>
+          </div>
+
+          {/* Text */}
+          <h2 className="mt-6 text-2xl font-bold text-white tracking-wide">
+            Loading Dashboard
+          </h2>
+
+          <p className="mt-2 text-gray-300 text-sm animate-pulse">
+            Fetching your jobs and analytics...
+          </p>
+        </div>
       </div>
     );
   }
@@ -75,20 +91,20 @@ function Dashboard() {
       {/* view profile modal */}
       {viewProfile && (
         <div className="fixed inset-0 z-50 bg-black/10 backdrop-blur-sm flex justify-end w-full">
-          <div className="w-full sm:w-96 min-h-screen overflow-y-auto bg-slate-950 border-l border-white/10 shadow-2xl p-6 flex flex-col">
+          <div className="w-full sm:w-96 min-h-screen overflow-y-auto bg-white dark:bg-slate-950 border-l border-black/10 dark:border-white/10 shadow-2xl p-6 flex flex-col text-black dark:text-white transition-colors duration-300">
             {/* Profile Header */}
-            <div className="flex flex-col items-center text-center border-b border-white/10 pb-6">
+            <div className="flex flex-col items-center text-center border-b border-black/10 dark:border-white/10 pb-6">
               <img
                 src={user}
                 alt="User"
-                className="w-24 h-24 rounded-full object-cover bg-white/10 p-2 border border-white/20"
+                className="w-24 h-24 rounded-full object-cover bg-black/5 dark:bg-white/10 p-2 border border-black/10 dark:border-white/20"
               />
 
               <h2 className="text-2xl font-bold mt-4"></h2>
 
-              <p className="text-gray-400 text-sm">
+              <p className="text-black dark:text-white text-sm">
                 Welcome back to{" "}
-                <span className="text-xl font-semibold capitalize text-white">
+                <span className="text-xl font-semibold capitalize text-black dark:text-white">
                   {currentUserData?.name}
                 </span>{" "}
                 dashboard
@@ -97,14 +113,14 @@ function Dashboard() {
 
             {/* Profile Stats */}
             <div className="mt-6 space-y-4 flex-grow mb-3">
-              <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-4">
+              <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-4">
                 <p className="text-gray-400 text-sm">Email</p>
 
                 <h3 className="font-semibold mt-1">{currentUserData?.email}</h3>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-4">
+                <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-4">
                   <p className="text-gray-400 text-sm">Applications</p>
 
                   <h3 className="text-2xl font-bold mt-1">
@@ -112,7 +128,7 @@ function Dashboard() {
                   </h3>
                 </div>
 
-                <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-4">
+                <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-4">
                   <p className="text-gray-400 text-sm">Interviews</p>
 
                   <h3 className="text-2xl font-bold mt-1">
@@ -121,7 +137,7 @@ function Dashboard() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-5">
+              <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-5">
                 <p className="text-sm text-white/80">Member Since</p>
 
                 <h2 className="text-xl font-bold mt-2">
@@ -139,7 +155,7 @@ function Dashboard() {
                   Tracking career growth with Job Tracker SaaS.
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-700 rounded-xl shadow-lg border border-white/40 p-5">
+              <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-5">
                 <h1>Next Interviews List</h1>
                 {jobs &&
                   jobs
@@ -147,9 +163,9 @@ function Dashboard() {
                     .map((job) => (
                       <div
                         key={job.id}
-                        className="bg-white/10 border border-white/10 rounded-lg p-3 text-white mt-3"
+                        className="bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-lg p-3 text-black dark:text-white mt-3"
                       >
-                        <h2 className="font-semibold text-white">
+                        <h2 className="font-semibold text-sm text-gray-600 dark:text-gray-300">
                           {job.company} -
                           <span className="text-sm text-gray-600 dark:text-gray-300">
                             {job.role}
@@ -167,7 +183,7 @@ function Dashboard() {
                   setViewProfile(false);
                   document.body.style.overflow = "auto";
                 }}
-                className="w-full bg-red-500/40 hover:bg-red-500/80 text-white transition-all duration-300 py-3 rounded-xl font-medium hover:scale-[1.02]"
+                className="w-full bg-red-500/20 hover:bg-red-500/80 text-red-600 dark:text-white transition-all duration-300 py-3 rounded-xl font-medium hover:scale-[1.02]"
               >
                 Close
               </button>
