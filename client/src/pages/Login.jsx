@@ -41,7 +41,7 @@ function Login() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="px-3 py-2 w-full border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black text-white rounded-sm shadow-2xl"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -50,7 +50,7 @@ function Login() {
           <input
             type="password"
             placeholder="Enter your password"
-            className="px-3 py-2 w-full border-none outline-none bg-black rounded-sm shadow-2xl"
+            className="px-3 py-2 w-full border-none outline-none bg-black text-white rounded-sm shadow-2xl"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}

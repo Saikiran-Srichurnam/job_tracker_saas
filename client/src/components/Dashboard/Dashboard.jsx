@@ -211,27 +211,29 @@ function Dashboard() {
         <JobsChart jobsData={jobsData} />
 
         {/* Recent Jobs */}
-        <div className="mt-8">
-          <input
-            type="text"
-            placeholder="Search company or role..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white outline-none"
-          />
-        </div>
-        <div className="mt-4">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-white/10 border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-gray-400 outline-none sm:w-auto"
-          >
-            <option value="ALL">ALL</option>
-            <option value="APPLIED">APPLIED</option>
-            <option value="INTERVIEW">INTERVIEW</option>
-            <option value="OFFER">OFFER</option>
-            <option value="REJECTED">REJECTED</option>
-          </select>
+        <div className="mt-8 sm:flex sm:justify-between sm:items-center sm:gap-3">
+          <div className="w-full">
+            <input
+              type="text"
+              placeholder="Search company or role..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-white/10 border-2 border-black/20 dark:border-white/20 rounded-xl px-4 py-3 text-black dark:text-white outline-none sm:flex-grow"
+            />
+          </div>
+          <div className="mt-4 sm:mt-0">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="bg-black dark:bg-white border border-white/20 dark:border-black/20 rounded-lg px-4 sm:px-3 py-3 text-sm sm:text-base text-white dark:text-black outline-none sm:w-auto lg:min-w-48"
+            >
+              <option value="ALL">ALL</option>
+              <option value="APPLIED">APPLIED</option>
+              <option value="INTERVIEW">INTERVIEW</option>
+              <option value="OFFER">OFFER</option>
+              <option value="REJECTED">REJECTED</option>
+            </select>
+          </div>
         </div>
         <JobsList
           jobs={jobs}

@@ -70,7 +70,7 @@ function AddJobModal({
   return (
     <>
       <button
-        className="mt-6 px-6 py-3 bg-white text-slate-900 rounded-xl font-semibold hover:scale-105 duration-300"
+        className="mt-6 px-6 py-3 bg-black text-white dark:bg-white dark:text-slate-900 rounded-xl font-semibold hover:scale-105 duration-300"
         onClick={() => {
           setJobModal(true);
           document.body.style.overflow = "hidden";

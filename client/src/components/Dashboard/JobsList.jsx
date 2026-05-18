@@ -9,12 +9,12 @@ function JobsList({
   setJobModal,
   searchTerm,
   statusFilter,
-  setStatusFilter,
 }) {
   const handleStatusChange = async (jobId, status) => {
     try {
       await updateJobStatus(jobId, status);
 
+      // setStatusFilter("ALL");
       await fetchDashboardData();
       toast.success("Status Updated");
     } catch (error) {
@@ -56,7 +56,7 @@ function JobsList({
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-2xl font-semibold">Recent Applications</h3>
         <button
-          className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium"
+          className="px-4 py-2 border border-black/30 hover:bg-black/10 dark:border-white/30 rounded-lg dark:hover:bg-white/10 duration-300 hover:scale-105"
           onClick={() => setShowAllJobs(!showAllJobs)}
         >
           {showAllJobs ? "Show less " : "View all"}
@@ -66,29 +66,30 @@ function JobsList({
       <div className="space-y-4">
         {displayJobs.map((job) => (
           <div
-            className="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/60 w-full flex flex-col lg:flex-row gap-4 lg:gap-0 lg:justify-between lg:items-center"
+            className="p-4 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:border-black/60 dark:hover:border-white/60 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 lg:gap-0 lg:justify-between lg:items-center shadow-lg dark:shadow-lg"
             key={job.id}
           >
             {job.role} - {job.company}
             <div className="flex flex-wrap gap-3 sm:gap-4 lg:gap-6">
               <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter((job.id, e.target.value))}
-                className="bg-black/40 border border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-white outline-none sm:w-auto"
+                value={job.status}
+                onChange={(e) => handleStatusChange(job.id, e.target.value)}
+                className="bg-black dark:bg-white border border-white/20 dark:bg-border-bla
+                /20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-white dark:text-black outline-none sm:w-auto"
               >
-                <option value="ALL" className="bg-black/10 text-white w-40">
-                  ALL
-                </option>
-                <option value="APPLIED" className="bg-black/10 text-white">
+                <option value="APPLIED" className="bg-black text-white">
                   APPLIED
                 </option>
-                <option value="INTERVIEW" className="bg-black/10 text-white">
+
+                <option value="INTERVIEW" className="bg-black text-white">
                   INTERVIEW
                 </option>
-                <option value="OFFER" className="bg-black/10 text-white">
+
+                <option value="OFFER" className="bg-black text-white">
                   OFFER
                 </option>
-                <option value="REJECTED" className="bg-black/10 text-white">
+
+                <option value="REJECTED" className="bg-black text-white">
                   REJECTED
                 </option>
               </select>

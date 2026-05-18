@@ -24,3 +24,16 @@
 .animate-popup {
   animation: popup 0.3s ease-out;
 }
+
+.recharts-rectangle:focus {
+  outline: none !important;
+}
+
+.recharts-layer:focus {
+  outline: none !important;
+}
+
+svg:focus,
+svg *:focus {
+  outline: none !important;
+}
