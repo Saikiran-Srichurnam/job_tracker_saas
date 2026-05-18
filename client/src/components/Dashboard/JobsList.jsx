@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { updateJobStatus, deleteJob } from "../../services/jobsApi.js";
 import toast from "react-hot-toast";
 
-function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
+function JobsList({
+  jobs,
+  fetchDashboardData,
+  setEditJob,
+  setJobModal,
+  searchTerm,
+  statusFilter,
+  setStatusFilter,
+}) {
   const handleStatusChange = async (jobId, status) => {
     try {
       await updateJobStatus(jobId, status);
@@ -31,7 +39,17 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
   // show only first three jobs view button functionality
   const [showAllJobs, setShowAllJobs] = useState(false);
 
-  const displayJobs = showAllJobs ? jobs : jobs.slice(0, 3);
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch = `${job.company} ${job.role}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesStatus = statusFilter === "ALL" || job.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  const displayJobs = showAllJobs ? filteredJobs : filteredJobs.slice(0, 3);
 
   return (
     <div className="bg-white/10 border border-white/10 rounded-2xl p-6 mt-8 shadow-2xl">
@@ -54,10 +72,11 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
             {job.role} - {job.company}
             <div className="flex flex-wrap gap-3 sm:gap-4 lg:gap-6">
               <select
-                value={job.status}
-                onChange={(e) => handleStatusChange(job.id, e.target.value)}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter((job.id, e.target.value))}
                 className="bg-black/40 border border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-white outline-none w-full sm:w-auto"
               >
+                <option value="ALL">ALL</option>
                 <option value="APPLIED">APPLIED</option>
                 <option value="INTERVIEW">INTERVIEW</option>
                 <option value="OFFER">OFFER</option>
@@ -91,7 +110,7 @@ function JobsList({ jobs, fetchDashboardData, setEditJob, setJobModal }) {
             </div>
           </div>
         ))}
-        {jobs.length === 0 && (
+        {displayJobs.length === 0 && (
           <div className="text-center py-10 text-gray-400">
             No jobs added yet.
           </div>

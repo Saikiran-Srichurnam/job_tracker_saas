@@ -19,6 +19,9 @@ function Dashboard() {
   const [currentUserData, setCurrentUserData] = useState(null); // used in Header component
   const [loading, setLoading] = useState(true);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
+
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
@@ -204,11 +207,36 @@ function Dashboard() {
         />
 
         {/* Recent Jobs */}
+        <div className="mt-8">
+          <input
+            type="text"
+            placeholder="Search company or role..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white outline-none"
+          />
+        </div>
+        <div className="mt-4">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white outline-none"
+          >
+            <option value="ALL">ALL</option>
+            <option value="APPLIED">APPLIED</option>
+            <option value="INTERVIEW">INTERVIEW</option>
+            <option value="OFFER">OFFER</option>
+            <option value="REJECTED">REJECTED</option>
+          </select>
+        </div>
         <JobsList
           jobs={jobs}
           fetchDashboardData={fetchDashboardData}
           setEditJob={setEditJob}
           setJobModal={setJobModal}
+          searchTerm={searchTerm}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
         />
       </main>
 
