@@ -14,6 +14,7 @@ import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,10 +32,12 @@ const router = createBrowserRouter(
   ),
 );
 createRoot(document.getElementById("root")).render(
-  <AuthProvider>
-    <Toaster position="top-right" />
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
-  </AuthProvider>,
+  <ThemeProvider>
+    <AuthProvider>
+      <Toaster position="top-right" />
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </AuthProvider>
+  </ThemeProvider>,
 );

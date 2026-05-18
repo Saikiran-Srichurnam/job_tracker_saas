@@ -33,9 +33,9 @@ function Login() {
   };
   return (
     <div className="bg-white/40 p-8 rounded-lg shadow-lg flex justify-center items-center h-screen duration-300">
-      <div className="bg-black/80 p-6 sm:p-10 w-full max-w-md rounded-md border-none">
+      <div className="bg-white dark:bg-black/80 p-6 sm:p-10 w-full max-w-md rounded-md border-none">
         <form
-          className="w-full border border-white/40 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-white shadow-2xl"
+          className="w-full border border-white/40 min-h-32 p-8 flex justify-center flex-col items-center gap-5 text-black dark:text-white shadow-2xl"
           onSubmit={handleLoginForm}
         >
           <input

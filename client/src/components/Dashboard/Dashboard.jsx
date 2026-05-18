@@ -64,7 +64,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-black dark:text-white flex flex-col transition-colors duration-300">
       {/* Header */}
       <Header
         setViewProfile={setViewProfile}
@@ -151,7 +151,7 @@ function Dashboard() {
                       >
                         <h2 className="font-semibold text-white">
                           {job.company} -
-                          <span className="text-sm text-gray-300">
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
                             {job.role}
                           </span>
                         </h2>
@@ -183,7 +183,7 @@ function Dashboard() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
             Manage Your Career Journey Like a Pro
           </h2>
-          <p className="text-gray-300 mt-3 text-sm sm:text-base lg:text-lg">
+          <p className="text-gray-600 dark:text-gray-300 mt-3 text-sm sm:text-base lg:text-lg">
             Track applications, interviews, offers, and progress with one
             premium dashboard.
           </p>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function StatsCards({jobsData}) {
+function StatsCards({ jobsData }) {
   // const [jobsData, setJobsData] = useState({});
 
   // useEffect(() => {
@@ -20,29 +20,29 @@ function StatsCards({jobsData}) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-8">
-      <div className="bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
-        <p className="text-gray-300">Applications</p>
+      <div className="bg-black/5 dark:bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
+        <p className="text-gray-600 dark:text-gray-300">Applications</p>
         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2">
           {jobsData?.totalJobsCount || 0}
         </h3>
       </div>
 
-      <div className="bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
-        <p className="text-gray-300">Interviews</p>
+      <div className="bg-black/5 dark:bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
+        <p className="text-gray-600 dark:text-gray-300">Interviews</p>
         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2">
           {jobsData?.interviewJobsCount || 0}
         </h3>
       </div>
 
-      <div className="bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
-        <p className="text-gray-300">Offers</p>
+      <div className="bg-black/5 dark:bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
+        <p className="text-gray-600 dark:text-gray-300">Offers</p>
         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2">
           {jobsData?.offerJobsCount || 0}
         </h3>
       </div>
 
-      <div className="bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
-        <p className="text-gray-300">Rejected</p>
+      <div className="bg-black/5 dark:bg-white/10 p-6 rounded-2xl shadow-xl border border-white/10">
+        <p className="text-gray-600 dark:text-gray-300">Rejected</p>
         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2">
           {jobsData?.rejectedJobsCount || 0}
         </h3>
