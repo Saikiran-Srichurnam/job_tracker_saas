@@ -7,6 +7,7 @@ import AddJobModal from "./AddJobModal.jsx";
 import { getAllJobs, getJobStats } from "../../services/jobsApi.js";
 import { getCurrentUser } from "../../services/userApi.js";
 import user from "../../images/user.png";
+import JobsChart from "../Dashboard/JobStats.jsx";
 
 function Dashboard() {
   const [jobsData, setJobsData] = useState({}); // used in Stats cards component
@@ -206,6 +207,9 @@ function Dashboard() {
           fetchDashboardData={fetchDashboardData}
         />
 
+        {/* Jobs stats */}
+        <JobsChart jobsData={jobsData} />
+
         {/* Recent Jobs */}
         <div className="mt-8">
           <input
@@ -220,7 +224,7 @@ function Dashboard() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white outline-none"
+            className="bg-white/10 border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-gray-400 outline-none sm:w-auto"
           >
             <option value="ALL">ALL</option>
             <option value="APPLIED">APPLIED</option>

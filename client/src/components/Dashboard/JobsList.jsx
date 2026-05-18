@@ -74,13 +74,23 @@ function JobsList({
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter((job.id, e.target.value))}
-                className="bg-black/40 border border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-white outline-none w-full sm:w-auto"
+                className="bg-black/40 border border-white/20 rounded-lg px-2 sm:px-3 py-2 text-sm sm:text-base text-white outline-none sm:w-auto"
               >
-                <option value="ALL">ALL</option>
-                <option value="APPLIED">APPLIED</option>
-                <option value="INTERVIEW">INTERVIEW</option>
-                <option value="OFFER">OFFER</option>
-                <option value="REJECTED">REJECTED</option>
+                <option value="ALL" className="bg-black/10 text-white w-40">
+                  ALL
+                </option>
+                <option value="APPLIED" className="bg-black/10 text-white">
+                  APPLIED
+                </option>
+                <option value="INTERVIEW" className="bg-black/10 text-white">
+                  INTERVIEW
+                </option>
+                <option value="OFFER" className="bg-black/10 text-white">
+                  OFFER
+                </option>
+                <option value="REJECTED" className="bg-black/10 text-white">
+                  REJECTED
+                </option>
               </select>
               <button
                 className="hover:cursor-pointer px-4 py-2 hover:bg-blue-500/20 bg-gray-500/20 text-blue-300 rounded-lg transition duration-300 border border-gray-400/30 text-sm font-semibold backdrop-blur-md hover:text-blue-500"
