@@ -62,15 +62,12 @@ function Dashboard() {
           {/* Spinner */}
           <div className="relative w-20 h-20">
             <div className="absolute inset-0 rounded-full border-[6px] border-cyan-500/20"></div>
-
             <div className="absolute inset-0 rounded-full border-[6px] border-transparent border-t-cyan-400 animate-spin"></div>
           </div>
-
           {/* Text */}
           <h2 className="mt-6 text-2xl font-bold text-white tracking-wide">
             Loading Dashboard
           </h2>
-
           <p className="mt-2 text-gray-300 text-sm animate-pulse">
             Fetching your jobs and analytics...
           </p>
