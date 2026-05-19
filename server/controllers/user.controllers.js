@@ -60,12 +60,10 @@ const generateRefreshAndAccessToken = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, username, password } = req.body;
+  const { email, name, password } = req.body;
 
   // validation
-  if (
-    [email, username, password].some((field) => !field || field.trim() === "")
-  ) {
+  if ([email, name, password].some((field) => !field || field.trim() === "")) {
     throw new ApiError(400, "All Fields are Required");
   }
 
@@ -85,7 +83,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     const newUser = await prisma.user.create({
       data: {
-        name: username,
+        name: name,
         email: email,
         password: hashedPassword,
       },
