@@ -109,7 +109,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await prisma.user.findFirst({
       //findUnique doesnot support OR operator so use findFirst
       where: {
-        OR: [{ email: email }, { name: username }],
+        OR: [{ email}, { name }],
       },
     });
     if (!user) {
@@ -127,7 +127,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const loggedInUser = {
       id: user.id,
       email: user.email,
-      name: user.username,
+      name: user.name,
     };
 
     const options = {
