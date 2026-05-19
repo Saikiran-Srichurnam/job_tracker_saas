@@ -4,7 +4,7 @@ import { registerUser } from "../services/userApi.js";
 import toast from "react-hot-toast";
 
 function Register() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -15,7 +15,7 @@ function Register() {
 
     try {
       const res = await registerUser({
-        username,
+        name,
         email,
         password,
       });
@@ -40,8 +40,8 @@ function Register() {
             placeholder="Enter your Username"
             className="px-3 py-2 w-full border-none outline-none bg-black text-white rounded-sm shadow-2xl"
             required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <input
             type="email"
