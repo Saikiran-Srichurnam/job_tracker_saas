@@ -99,7 +99,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password} = req.body;
 
   if ([email, password].some((field) => !field || field.trim() === "")) {
     throw new ApiError(401, "Email and Password both are Required");
@@ -109,7 +109,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await prisma.user.findFirst({
       //findUnique doesnot support OR operator so use findFirst
       where: {
-        OR: [{ email}, { name }],
+        email,
       },
     });
     if (!user) {
@@ -132,8 +132,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     };
 
     return res
