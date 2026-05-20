@@ -37,9 +37,7 @@ createRoot(document.getElementById("root")).render(
   <ThemeProvider>
     <AuthProvider>
       <Toaster position="top-right" />
-      <RouterProvider router={router}>
-        <App />
-      </RouterProvider>
+      <RouterProvider router={router} />
     </AuthProvider>
   </ThemeProvider>,
 );
