@@ -1,15 +1,7 @@
-import { Route } from "react-router-dom";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return (
-    <div className="bg-black/80 h-screen w-full text-white flex justify-center items-center">
-      {/* <Route path="/" element={<Register />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} /> */}
-    </div>
-  );
+  return <Outlet />;
 }
 
 export default App;

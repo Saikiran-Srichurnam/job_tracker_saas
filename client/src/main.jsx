@@ -8,6 +8,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import Layout from "./Layout.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
@@ -18,19 +19,20 @@ import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+    <Route path="/" element={<Layout />}>
       {/* public routes */}
-      <Route path="/register" element={<Register />} />
-      <Route path="/" element={<Register />} />
-      <Route path="/login" element={<Login />} />
+      <Route index element={<Register />} />
+      <Route path="register" element={<Register />} />
+      <Route path="login" element={<Login />} />
 
       {/* protected routes */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
       </Route>
-    </>,
+    </Route>,
   ),
 );
+
 createRoot(document.getElementById("root")).render(
   <ThemeProvider>
     <AuthProvider>
