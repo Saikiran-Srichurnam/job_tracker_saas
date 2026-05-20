@@ -5,12 +5,8 @@ import React from "react";
 
 function Layout() {
   return (
-    <div>
-      <Header />
-      <div className="flex justify-center items-center">
-        <Outlet />
-      </div>
-      <Footer />
+    <div className="flex justify-center items-center">
+      <Outlet />
     </div>
   );
 }
