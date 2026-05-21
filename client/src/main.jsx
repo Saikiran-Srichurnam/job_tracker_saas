@@ -19,17 +19,21 @@ import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      {/* public routes */}
-      <Route index element={<Register />} />
-      <Route path="register" element={<Register />} />
-      <Route path="login" element={<Login />} />
-
-      {/* protected routes */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="dashboard" element={<Dashboard />} />
+    <>
+      <Route path="/" element={<App />}>
+        {/* public routes */}
+        <Route index element={<Register />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
       </Route>
-    </Route>,
+      {/* protected routes */}
+      <Route path="/" element={<Layout />}>
+        <Route element={<ProtectedRoute />}>
+          <Route path="dashboard" element={<Dashboard />} />
+        </Route>
+      </Route>
+      ,
+    </>,
   ),
 );
 

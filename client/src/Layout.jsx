@@ -4,7 +4,13 @@ import { Outlet } from "react-router-dom";
 import React from "react";
 
 function Layout() {
-  return <Outlet />;
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  );
 }
 
 export default Layout;
