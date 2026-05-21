@@ -32,7 +32,6 @@ const router = createBrowserRouter(
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Route>
-      ,
     </>,
   ),
 );
