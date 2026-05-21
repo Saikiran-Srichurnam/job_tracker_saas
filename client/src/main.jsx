@@ -1,39 +1,55 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import App from "./App.jsx"
+
+import App from "./App.jsx";
 import Layout from "./Layout.jsx";
+
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import Privacy from "./pages/Privacy.jsx";
+import Terms from "./pages/Terms.jsx";
+import Support from "./pages/Support.jsx";
+
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
+
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+
 import { AuthProvider } from "./context/AuthContext.jsx";
-import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      {/* public routes */}
       <Route path="/" element={<App />}>
-        {/* public routes */}
         <Route index element={<Register />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+
+        {/* footer pages */}
+        <Route path="privacy" element={<Privacy />} />
+        <Route path="terms" element={<Terms />} />
+        <Route path="support" element={<Support />} />
       </Route>
+
       {/* protected routes */}
       <Route path="/" element={<Layout />}>
         <Route element={<ProtectedRoute />}>
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Route>
-    </>,
-  ),
+    </>
+  )
 );
 
 createRoot(document.getElementById("root")).render(
@@ -42,5 +58,5 @@ createRoot(document.getElementById("root")).render(
       <Toaster position="top-right" />
       <RouterProvider router={router} />
     </AuthProvider>
-  </ThemeProvider>,
+  </ThemeProvider>
 );
