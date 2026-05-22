@@ -135,7 +135,9 @@ function Dashboard() {
               </div>
 
               <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-5">
-                <p className="text-sm text-white/80">Member Since</p>
+                <p className="text-sm text-gray-400">
+                  Member Since
+                </p>
 
                 <h2 className="text-xl font-bold mt-2">
                   {new Date(currentUserData?.createdAt).toLocaleDateString(
@@ -148,7 +150,7 @@ function Dashboard() {
                   )}
                 </h2>
 
-                <p className="text-sm mt-2 text-white/90">
+                <p className="text-sm mt-2 dark:text-white/80 text-black">
                   Tracking career growth with Job Tracker SaaS.
                 </p>
               </div>
