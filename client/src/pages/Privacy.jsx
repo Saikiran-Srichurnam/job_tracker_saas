@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Privacy() {
+  const navigate = useNavigate();
+  const handleCloseBtn = () => {
+    navigate("/dashboard");
+  };
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 text-gray-800 dark:text-white">
       <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
@@ -32,6 +37,14 @@ function Privacy() {
         We implement reasonable security measures to protect your personal
         information.
       </p>
+      <div className="space-y-3 pt-6 border-t border-white/10">
+        <button
+          onClick={() => handleCloseBtn()}
+          className="w-full bg-red-500/20 hover:bg-red-500/80 text-red-600 dark:text-white transition-all duration-300 py-3 rounded-xl font-medium hover:scale-[1.02]"
+        >
+          Go to Dashboard
+        </button>
+      </div>
     </div>
   );
 }

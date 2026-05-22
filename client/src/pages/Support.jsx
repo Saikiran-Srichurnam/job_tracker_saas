@@ -1,19 +1,23 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Support() {
   const form = useRef();
-
+  const navigate = useNavigate();
+  const handleCloseBtn = () => {
+    navigate("/dashboard");
+  };
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
       .sendForm(
-        "service_0k2flda",
-        "template_34z9tli",
+        "service_tx6ba6r",
+        "template_a8u2o5d",
         form.current,
-        "h7UgqYJJUVq0zWfxw"
+        "XlKpY6oPiDUUgqO4H",
       )
       .then(
         () => {
@@ -22,7 +26,7 @@ function Support() {
         },
         () => {
           toast.error("Something went wrong!");
-        }
+        },
       );
   };
 
@@ -112,6 +116,14 @@ function Support() {
         <div className="mt-8 text-center text-gray-500 dark:text-gray-400">
           <p>Email: support@jobtrackpro.com</p>
           <p className="mt-1">Usually responds within 24 hours</p>
+        </div>
+        <div className="space-y-3 pt-6 border-t border-white/10">
+          <button
+            onClick={() => handleCloseBtn()}
+            className="w-full bg-red-500/20 hover:bg-red-500/80 text-red-600 dark:text-white transition-all duration-300 py-3 rounded-xl font-medium hover:scale-[1.02]"
+          >
+            Go to Dashboard
+          </button>
         </div>
       </div>
     </div>
