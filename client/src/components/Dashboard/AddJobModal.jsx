@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { createJob, updateJob } from "../../services/jobsApi.js";
 import toast from "react-hot-toast";
 
@@ -11,9 +11,8 @@ function AddJobModal({
   companyName,
   setCompanyName,
   roleName,
-  setRoleName
+  setRoleName,
 }) {
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,13 +25,14 @@ function AddJobModal({
           },
           editJob.id,
         );
+
         toast.success("Job Updated Successfully");
       } else {
-        const res = await createJob({
+        await createJob({
           company: companyName,
           role: roleName,
         });
-        console.log(res);
+
         toast.success("Job Added Successfully");
       }
 
@@ -45,9 +45,7 @@ function AddJobModal({
       setJobModal(false);
       document.body.style.overflow = "auto";
     } catch (error) {
-      console.log(error.message);
       toast.error("Something went wrong");
-      return error;
     }
   };
 
@@ -66,11 +64,10 @@ function AddJobModal({
     }
   }, [editJob]);
 
-
   return (
     <>
       <button
-        className="mt-6 px-6 py-3 bg-black text-white dark:bg-white dark:text-slate-900 rounded-xl font-semibold hover:scale-105 duration-300"
+        className="mt-6 px-6 py-3 bg-black text-white dark:bg-white dark:text-black rounded-xl font-semibold hover:opacity-90 transition"
         onClick={() => {
           setJobModal(true);
           document.body.style.overflow = "hidden";
@@ -80,50 +77,67 @@ function AddJobModal({
       </button>
 
       {jobModal && (
-        <div className="fixed inset-0 bg-black/5 backdrop-blur-sm flex justify-center items-center z-50">
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
           <form
             onSubmit={handleSubmit}
-            className="bg-black/50 text-white p-6 sm:p-8 rounded-2xl shadow-2xl animate-popup flex flex-col justify-between min-h-[400px] w-[90%] max-w-[360px]"
+            className="w-full max-w-md bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 rounded-3xl p-8 shadow-2xl"
           >
-            <h1 className="text-2xl font-bold text-center tracking-wider underline underline-offset-8">
-              {editJob ? "UPDATE JOB" : "CREATE NEW JOB"}
+            <h1 className="text-3xl font-bold mb-2 text-black dark:text-white">
+              {editJob ? "Update Job" : "Add New Job"}
             </h1>
-            <div className="flex flex-col justify-start">
-              <label htmlFor="company" className="text-lg font-serif">
-                Company
-              </label>
-              <input
-                type="text"
-                name=""
-                id="company"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                required
-                className="bg-transparent border-b-2 border-b-white/50 mt-2 overflow-hidden px-2 outline-none"
-              />
-              <label htmlFor="role" className="text-lg font-serif mt-8">
-                Role
-              </label>
-              <input
-                type="text"
-                name=""
-                id="role"
-                value={roleName}
-                onChange={(e) => setRoleName(e.target.value)}
-                required
-                className="bg-transparent border-b-2 border-b-white/50 mt-2 overflow-hidden px-2 outline-none"
-              />
+
+            <p className="text-slate-500 dark:text-slate-400 mb-8">
+              Manage your job applications efficiently.
+            </p>
+
+            <div className="space-y-5">
+              <div>
+                <label className="text-sm font-medium">
+                  Company Name
+                </label>
+
+                <input
+                  type="text"
+                  value={companyName}
+                  onChange={(e) =>
+                    setCompanyName(e.target.value)
+                  }
+                  required
+                  className="mt-2 w-full px-4 py-3 rounded-xl border border-black/10 dark:border-white/10 bg-slate-50 dark:bg-slate-950 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">
+                  Role
+                </label>
+
+                <input
+                  type="text"
+                  value={roleName}
+                  onChange={(e) =>
+                    setRoleName(e.target.value)
+                  }
+                  required
+                  className="mt-2 w-full px-4 py-3 rounded-xl border border-black/10 dark:border-white/10 bg-slate-50 dark:bg-slate-950 outline-none"
+                />
+              </div>
             </div>
 
-            <div className="flex justify-between items-center mt-4">
-              <button className="px-4 py-2 bg-white text-black rounded-lg hover:duration-300 hover:bg-white/20 hover:border-2 hover:border-white/30 border-2 text-md font-semibold hover:text-white">
-                {editJob ? "Update Job" : "Submit"}
-              </button>
+            <div className="flex gap-4 mt-8">
               <button
-                className="px-4 py-2 bg-white text-black rounded-lg hover:duration-300 hover:bg-white/20 hover:border-2 hover:border-white/30 border-2 text-md font-semibold hover:text-white"
-                onClick={handleClose}
+                type="submit"
+                className="flex-1 bg-black text-white dark:bg-white dark:text-black py-3 rounded-xl font-semibold"
               >
-                {editJob ? "Cancel" : "Close"}
+                {editJob ? "Update" : "Create"}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleClose}
+                className="flex-1 border border-black/10 dark:border-white/10 py-3 rounded-xl font-semibold"
+              >
+                Cancel
               </button>
             </div>
           </form>
