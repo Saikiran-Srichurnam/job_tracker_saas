@@ -84,12 +84,19 @@ function JobStats({ jobsData }) {
             <Tooltip
               cursor={{ fill: "transparent" }}
               contentStyle={{
-                backgroundColor: darkMode ? "#0F172A" : "#FFFFFF",
+                backgroundColor: darkMode ? "#0f172a" : "#ffffff",
                 border: darkMode
                   ? "1px solid rgba(255,255,255,0.1)"
                   : "1px solid rgba(0,0,0,0.1)",
                 borderRadius: "12px",
-                color: darkMode ? "#fff" : "#000",
+                color: darkMode ? "#ffffff" : "#000000",
+              }}
+              labelStyle={{
+                color: darkMode ? "#ffffff" : "#000000",
+                fontWeight: 600,
+              }}
+              itemStyle={{
+                color: darkMode ? "#ffffff" : "#000000",
               }}
             />
 
