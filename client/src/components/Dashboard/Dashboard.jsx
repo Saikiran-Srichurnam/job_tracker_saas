@@ -135,9 +135,7 @@ function Dashboard() {
               </div>
 
               <div className="bg-gradient-to-br from-white via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-700 rounded-xl shadow-lg border border-black/10 dark:border-white/40 p-5">
-                <p className="text-sm text-gray-400">
-                  Member Since
-                </p>
+                <p className="text-sm text-gray-400">Member Since</p>
 
                 <h2 className="text-xl font-bold mt-2">
                   {new Date(currentUserData?.createdAt).toLocaleDateString(
@@ -192,9 +190,9 @@ function Dashboard() {
       )}
 
       {/* Main */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8">
+      <main className="flex-grow w-full max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8 overflow-x-hidden">
         {/* Hero Section */}
-        <div className="bg-white/10 border border-white/10 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-white/10 border border-white/10 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl w-full">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
             Manage Your Career Journey Like a Pro
           </h2>
